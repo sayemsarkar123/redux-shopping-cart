@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import CartProduct from '../CartProduct/CartProduct';
+import { searchProduct } from '../../redux/actions/cartAction';
 
-const Header = ({ cart }) => {
+const Header = ({ cart, searchProduct }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const cartStyle = { right: 0, top: 'calc(100% + 0.5rem)', height: '25rem', width: '25rem', zIndex: 999, overflowY: 'auto' };
   return (
@@ -21,7 +22,7 @@ const Header = ({ cart }) => {
           <form>
             <div className="form-row">
               <div className="col-md-10 px-0">
-                <input className="form-control border border-success rounded-0" placeholder="Search for Vegetables and Fruits" type="text"/>
+                    <input onChange={(event) => searchProduct({ text: event.target.value })} className="form-control border border-success rounded-0" placeholder="Search for Vegetables and Fruits" type="text"/>
               </div>
               <div className="col-md-2 px-0">
                 <button className="btn btn-block btn-success rounded-0"><FontAwesomeIcon icon={faSearch} /></button>
@@ -66,4 +67,8 @@ const mapStateToProps = ({ cart }) => ({
   cart
 });
 
-export default connect(mapStateToProps, null)(Header);
+const mapDispatchToProps = (dispatch) => ({
+  searchProduct: (payload) => dispatch(searchProduct(payload))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
