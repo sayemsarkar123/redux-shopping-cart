@@ -6,7 +6,7 @@ const initialState = {
   store
 }
 
-const reducer = (state = initialState, { type, payload: {id, quantity} }) => {
+const reducer = (state = initialState, { type, payload: {id, quantity} = {} }) => {
   switch (type) {
     case ADD_TO_CART:
       const deleteDuplicate = state.cart.filter(product => product.id !== id);
